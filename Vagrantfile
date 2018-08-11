@@ -20,7 +20,18 @@ Vagrant.configure("2") do |config|
 	node2.vm.box = "bento/ubuntu-16.04"
 	node2.vm.hostname = 'node2'
 	node2.vm.network :private_network, ip: "192.168.33.12"
+	node2.vm.provision :shell, path: "python.sh"
 	node2.vm.provider "virtualbox" do |v|
+  		v.memory = 512
+  		v.cpus = 1
+	end
+  end
+  config.vm.define "node3" do |node3|
+	node3.vm.box = "bento/ubuntu-16.04"
+	node3.vm.hostname = 'node3'
+	node3.vm.network :private_network, ip: "192.168.33.13"
+	node3.vm.provision :shell, path: "firefox.sh"
+	node3.vm.provider "virtualbox" do |v|
   		v.memory = 512
   		v.cpus = 1
 	end
@@ -29,9 +40,10 @@ Vagrant.configure("2") do |config|
 	master.vm.box = "bento/ubuntu-16.04"
 	master.vm.hostname = 'master'
 	master.vm.network :private_network, ip: "192.168.33.10"
+	master.vm.provision :shell, path: "ansible.sh"
 	master.vm.provider "virtualbox" do |v|
-  		v.memory = 512
-  		v.cpus = 1
+  		v.memory = 1024
+  		v.cpus = 2
 	end
   end
   # The most common configuration options are documented and commented below.
